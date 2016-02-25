@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+{% block result_list %}
+    {{ block.super }}
+    <p>
+        There are
+        <strong>
+            {{ cl.totals.dogs_count|default:'none' }} dogs and
+            {{ cl.totals.cats_count|default:'none' }} cats
+        </strong>
+        on this page.
+    </p>
+{% endblock %}
