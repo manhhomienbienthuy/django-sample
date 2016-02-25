@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tagging',
     'pet',
+    'inherit'
 ]
 
 MIDDLEWARE_CLASSES = [
