@@ -1,0 +1,50 @@
+version: '2'
+services:
+  db:
+    restart: always
+    image: postgres
+    expose:
+      - "5432"
+    env_file:
+      - .db_env
+    volumes_from:
+      - data
+    depends_on:
+      - data
+  data:
+    restart: always
+    image: postgres
+    expose:
+      - "5432"
+    volumes:
+      - /var/lib/postgresql
+    command: "true"
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./static:/www/static
+      - ./animals:/www/animals
+      - ./nginx/ssl:/www/ssl
+      - ./nginx/log:/www/log
+    links:
+      - web:web
+    depends_on:
+      - web
+  web:
+    restart: always
+    build: .
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    command: uwsgi --ini uwsgi.ini
+    links:
+      - db:db
+    volumes:
+      - .:/code
+    depends_on:
+      - db

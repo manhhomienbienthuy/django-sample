@@ -1,3 +1,7 @@
 __pycache__
 animals
 *.sqlite3
+static/
+.env
+nginx/log
+.db_env
